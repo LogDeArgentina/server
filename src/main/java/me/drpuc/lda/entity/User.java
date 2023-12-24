@@ -20,7 +20,6 @@ public class User {
     @Column(unique = true, nullable = false)
     private String callsign;
 
-    @Column(nullable = true)
     private String aliases = null;
 
     @Column(nullable = false)
