@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByCallsign(String callsign);
+    boolean existsByCallsignOrEmail(String callsign, String email);
 }
