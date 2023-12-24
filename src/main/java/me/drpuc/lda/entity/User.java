@@ -2,13 +2,13 @@ package me.drpuc.lda.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "\"user\"")
 public class User {
