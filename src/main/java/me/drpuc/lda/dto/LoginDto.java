@@ -1,9 +1,8 @@
 package me.drpuc.lda.dto;
 
-import lombok.Data;
+import java.io.Serializable;
 
-@Data
-public class LoginDto {
-    private String email;
-    private String password;
-}
+/**
+ * DTO for {@link me.drpuc.lda.entity.User}
+ */
+public record LoginDto(String email, String password) implements Serializable { }

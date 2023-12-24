@@ -1,11 +1,8 @@
 package me.drpuc.lda.dto;
 
-import lombok.Data;
+import java.io.Serializable;
 
-@Data
-public class RegisterDto {
-    private String callsign;
-    private String password;
-    private String email;
-    private String name;
-}
+/**
+ * DTO for {@link me.drpuc.lda.entity.User}
+ */
+public record RegisterDto(String callsign, String name, String email, String password) implements Serializable { }

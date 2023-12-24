@@ -23,8 +23,8 @@ public class UserService {
     private final Jwt jwt;
 
     public String login(LoginDto dto) {
-        var email = dto.getEmail();
-        var password = dto.getPassword();
+        var email = dto.email();
+        var password = dto.password();
 
         var authInputToken = new UsernamePasswordAuthenticationToken(email, password);
         authManager.authenticate(authInputToken);
@@ -33,10 +33,10 @@ public class UserService {
     }
 
     public String register(RegisterDto dto) {
-        var callsign = dto.getCallsign();
-        var password = dto.getPassword();
-        var name = dto.getName();
-        var email = dto.getEmail();
+        var callsign = dto.callsign();
+        var password = dto.password();
+        var name = dto.name();
+        var email = dto.email();
 
         if (!validCallsign(callsign)) {
             throw new IllegalArgumentException("invalid callsign");
