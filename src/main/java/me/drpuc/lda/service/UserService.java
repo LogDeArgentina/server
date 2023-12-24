@@ -23,20 +23,13 @@ public class UserService {
     private final Jwt jwt;
 
     public String login(LoginDto dto) {
-        var callsign = dto.getCallsign();
+        var email = dto.getEmail();
         var password = dto.getPassword();
 
-        if (empty(callsign)) {
-            throw new IllegalArgumentException("callsign is empty");
-        }
-        if (empty(password)) {
-            throw new IllegalArgumentException("password is empty");
-        }
-
-        var authInputToken = new UsernamePasswordAuthenticationToken(callsign, password);
+        var authInputToken = new UsernamePasswordAuthenticationToken(email, password);
         authManager.authenticate(authInputToken);
 
-        return jwt.generateToken(callsign);
+        return jwt.generateToken(email);
     }
 
     public String register(RegisterDto dto) {
@@ -66,7 +59,7 @@ public class UserService {
         var user = new User(callsign, name, email, encodedPass);
         userRepository.save(user);
 
-        return jwt.generateToken(callsign);
+        return jwt.generateToken(email);
     }
 
     private boolean validCallsign(String callsign) {

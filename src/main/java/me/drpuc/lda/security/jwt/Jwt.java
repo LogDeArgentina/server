@@ -20,22 +20,22 @@ public class Jwt {
     private int expiry;
 
 
-    public String generateToken(String callsign) throws IllegalArgumentException, JWTCreationException {
+    public String generateToken(String email) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
                 .withSubject("User Details")
                 .withIssuer("LDA")
                 .withIssuedAt(new Date())
-                .withClaim("callsign", callsign)
+                .withClaim("email", email)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expiry))
                 .sign(Algorithm.HMAC256(secret));
     }
 
-    public String validateTokenAndRetrieveCallsign(String token) throws JWTVerificationException {
+    public String validateTokenAndRetrieveEmail(String token) throws JWTVerificationException {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))
                 .withSubject("User Details")
                 .withIssuer("LDA")
                 .build();
         DecodedJWT jwt = verifier.verify(token);
-        return jwt.getClaim("callsign").asString();
+        return jwt.getClaim("email").asString();
     }
 }

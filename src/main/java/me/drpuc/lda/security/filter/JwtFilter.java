@@ -45,11 +45,11 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         try {
-            String callsign = jwtInstance.validateTokenAndRetrieveCallsign(jwt);
-            UserDetails userDetails = userDetailsService.loadUserByUsername(callsign);
+            String email = jwtInstance.validateTokenAndRetrieveEmail(jwt);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(
-                            callsign,
+                            email,
                             userDetails.getPassword(),
                             userDetails.getAuthorities()
                     );
