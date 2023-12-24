@@ -13,10 +13,10 @@ import java.util.Date;
 
 @Component
 public class Jwt {
-    @Value("${jwt_secret}")
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt_expiry}")
+    @Value("${jwt.expiry}")
     private int expiry;
 
 
