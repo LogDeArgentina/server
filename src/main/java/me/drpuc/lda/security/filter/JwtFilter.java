@@ -11,6 +11,7 @@ import me.drpuc.lda.security.service.LdaUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -29,7 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
-    ) throws ServletException, IOException {
+    ) throws ServletException, IOException, UsernameNotFoundException {
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || authHeader.isBlank() || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);
@@ -55,7 +56,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (SecurityContextHolder.getContext().getAuthentication() == null){
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
-        } catch(JWTVerificationException exc){
+        } catch (JWTVerificationException e) {
             response.sendError(SC_BAD_REQUEST, "Invalid JWT Token");
         }
 
