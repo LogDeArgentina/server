@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import me.drpuc.lda.config.CallsignValidator;
 import me.drpuc.lda.dto.LoginDto;
 import me.drpuc.lda.dto.RegisterDto;
+import me.drpuc.lda.entity.Station;
 import me.drpuc.lda.entity.User;
+import me.drpuc.lda.repository.StationRepository;
 import me.drpuc.lda.repository.UserRepository;
 import me.drpuc.lda.security.jwt.Jwt;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -18,6 +20,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class UserService {
     private final CallsignValidator callsignValidator;
     private final UserRepository userRepository;
+    private final StationRepository stationRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authManager;
     private final Jwt jwt;
@@ -57,6 +60,10 @@ public class UserService {
 
         var encodedPass = passwordEncoder.encode(password);
         var user = new User(callsign, name, email, encodedPass);
+        var station = new Station(callsign);
+        stationRepository.save(station);
+
+        user.addStation(station);
         userRepository.save(user);
 
         return jwt.generateToken(email);

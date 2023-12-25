@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Getter
@@ -20,7 +19,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String callsign;
 
-    private String aliases = null;
+    @OneToMany
+    private List<Station> stations = new LinkedList<>();
 
     @Column(nullable = false)
     private String name;
@@ -48,5 +48,14 @@ public class User {
         this.email = email;
         this.password = password;
         this.createdAt = new Date();
+    }
+
+    public void addStation(Station station) {
+        this.stations.add(station);
+    }
+
+    public void verify() {
+        this.verified = true;
+        this.verifiedAt = new Date();
     }
 }
