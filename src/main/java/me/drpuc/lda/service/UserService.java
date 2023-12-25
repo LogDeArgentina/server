@@ -11,6 +11,8 @@ import me.drpuc.lda.repository.UserRepository;
 import me.drpuc.lda.security.jwt.Jwt;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,12 +20,24 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final CallsignValidator callsignValidator;
     private final UserRepository userRepository;
     private final StationRepository stationRepository;
+
+    private final CallsignValidator callsignValidator;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authManager;
     private final Jwt jwt;
+
+    public User getUserByAuthentication(Authentication auth) {
+        var email = auth.getName();
+        return getUserByEmail(email);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("user not found via: " + email));
+    }
 
     public String login(LoginDto dto) {
         var email = dto.email();

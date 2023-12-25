@@ -1,11 +1,16 @@
 package me.drpuc.lda.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import me.drpuc.lda.radio.QsoConfirmation;
 import me.drpuc.lda.radio.RadioStatus;
 import java.util.Date;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Qso {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -15,8 +20,11 @@ public class Qso {
     @Column(nullable = false)
     private Date timestamp;
 
-    @OneToOne
-    private Station station;
+    @ManyToOne
+    private Station sentFromStation;
+
+    @ManyToOne
+    private Station sentToStation;
 
     @Embedded
     @Column(nullable = false)
@@ -28,7 +36,15 @@ public class Qso {
     @OneToOne
     private Qso confirmedQso = null;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private QsoConfirmation confirmation = QsoConfirmation.UNCONFIRMED;
+
+    public Qso(Date timestamp, Station from, Station to, RadioStatus radioStatus, String comment) {
+        this.timestamp = timestamp;
+        this.sentFromStation = from;
+        this.sentToStation = to;
+        this.radioStatus = radioStatus;
+        this.comment = comment;
+    }
 }
