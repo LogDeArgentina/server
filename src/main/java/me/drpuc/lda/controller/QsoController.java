@@ -17,8 +17,8 @@ public class QsoController {
     private final UserService userService;
     private final QsoService qsoService;
 
-    @PostMapping("/upload")
-    public String uploadQso(Authentication auth,
+    @PostMapping("/create")
+    public String createQso(Authentication auth,
                             @RequestBody CreateQsoDto qsoDto) {
         var user = userService.getUserByAuthentication(auth);
         return qsoService.create(user, qsoDto);
