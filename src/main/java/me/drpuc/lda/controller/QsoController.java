@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import me.drpuc.lda.service.QsoService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/qso")
@@ -27,6 +29,13 @@ public class QsoController {
                       @PathVariable String uuid) {
         var user = userService.getUserViaAuthentication(auth);
         return qsoService.read(user, uuid);
+    }
+
+    @GetMapping("/all/{stationCallsign}")
+    public List<Qso> getAllQso(Authentication auth,
+                               @PathVariable String stationCallsign) {
+        var user = userService.getUserViaAuthentication(auth);
+        return qsoService.readAllFrom(user, stationCallsign);
     }
 
     @DeleteMapping("/{uuid}")

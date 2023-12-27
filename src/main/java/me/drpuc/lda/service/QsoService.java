@@ -109,6 +109,22 @@ public class QsoService {
         return qso;
     }
 
+    public List<Qso> readAllFrom(User user, String stationCallsign) {
+        if (empty(stationCallsign)) {
+            throw new IllegalArgumentException("invalid station");
+        }
+
+        var station = stationRepository.findByCallsign(stationCallsign).orElseThrow(
+                () -> new IllegalArgumentException("invalid station")
+        );
+
+        if (!user.getStations().contains(station)) {
+            throw new IllegalArgumentException("invalid station");
+        }
+
+        return station.getQsos();
+    }
+
     /*
     * The QSO confirmation algorithm is divided in two parts:
     * 1. Check for QSO duplicates
