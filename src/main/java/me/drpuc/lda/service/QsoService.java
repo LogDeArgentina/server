@@ -52,6 +52,9 @@ public class QsoService {
         var toStation = stationRepository.findByCallsign(toStationDto.callsign()).orElseGet(
                 () -> stationRepository.save(new Station(toStationDto.callsign()))
         );
+        if (fromUser.getStations().contains(toStation)) {
+            throw new IllegalArgumentException("invalid station");
+        }
 
         var radioStatusEntity = new RadioStatus(radioStatus);
 
