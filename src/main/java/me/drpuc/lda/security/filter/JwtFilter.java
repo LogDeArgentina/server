@@ -17,8 +17,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
-
 @Component
 @AllArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
@@ -39,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String jwt = authHeader.substring(7);
         if (jwt.isBlank()) {
-            response.sendError(SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
             filterChain.doFilter(request, response);
             return;
         }
@@ -57,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (JWTVerificationException e) {
-            response.sendError(SC_BAD_REQUEST, "Invalid JWT Token");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
         }
 
         filterChain.doFilter(request, response);

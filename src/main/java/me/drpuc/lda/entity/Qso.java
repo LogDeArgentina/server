@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import me.drpuc.lda.radio.QsoConfirmation;
 import me.drpuc.lda.radio.RadioStatus;
+
 import java.util.Date;
 
 @Entity
