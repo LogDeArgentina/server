@@ -164,7 +164,6 @@ public class QsoService {
 
         if (!dupes.isEmpty()) {
             newQso.setConfirmation(QsoConfirmation.DUPLICATE);
-            newQso = qsoRepository.save(newQso);
         }
 
         // Written because we only want to associate each QSO once (avoiding exponential growth)
@@ -201,7 +200,7 @@ public class QsoService {
             stationRepository.save(fromStation);
             stationRepository.save(toStation);
 
-            return qsoRepository.save(newQso);
+            return newQso;
         }
 
         fromStation.addQso(newQso);
