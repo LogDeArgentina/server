@@ -28,7 +28,7 @@ public class UserService {
     private final AuthenticationManager authManager;
     private final Jwt jwt;
 
-    public User getUserByAuthentication(Authentication auth) {
+    public User getUserViaAuthentication(Authentication auth) {
         var email = auth.getName();
         return getUserByEmail(email);
     }
