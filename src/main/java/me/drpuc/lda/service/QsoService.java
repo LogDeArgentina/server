@@ -118,6 +118,8 @@ public class QsoService {
             newQso.associate(uniqueQso);
         }
 
+        newQso = qsoRepository.save(newQso);
+
         for (Qso nonDupe : nonDupes) {
             if (!ableToConfirm(newQso, nonDupe)) {
                 continue;
@@ -128,8 +130,20 @@ public class QsoService {
 
             newQso.setConfirmation(QsoConfirmation.CONFIRMED);
             newQso.associate(nonDupe);
+            newQso = qsoRepository.save(newQso);
+
+            fromStation.addQso(newQso);
+            toStation.addQso(newQso);
+            stationRepository.save(fromStation);
+            stationRepository.save(toStation);
+
             return qsoRepository.save(newQso);
         }
+
+        fromStation.addQso(newQso);
+        toStation.addQso(newQso);
+        stationRepository.save(fromStation);
+        stationRepository.save(toStation);
 
         return qsoRepository.save(newQso);
     }
