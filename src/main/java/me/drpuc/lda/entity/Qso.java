@@ -1,15 +1,11 @@
 package me.drpuc.lda.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import me.drpuc.lda.radio.QsoConfirmation;
 import me.drpuc.lda.radio.RadioStatus;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 @Entity
 @Getter
