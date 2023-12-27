@@ -36,8 +36,9 @@ public class Qso {
     @Column(nullable = false)
     private String comment;
 
-    @ManyToMany
-    private final List<Qso> associatedQsos = new LinkedList<>();
+    @JsonIgnore
+    @ManyToOne
+    private Qso associatedQso = null;
 
     @Setter
     @Enumerated(EnumType.STRING)
@@ -53,6 +54,6 @@ public class Qso {
     }
 
     public void associate(Qso qso) {
-        this.associatedQsos.add(qso);
+        this.associatedQso = qso;
     }
 }
