@@ -137,8 +137,8 @@ public class QsoService {
         // Written because we only want to associate each QSO once (avoiding exponential growth)
         Set<Qso> uniqueQsos = new HashSet<>();
         for (Qso dupe : dupes) {
-            if (!dupe.getAssociatedQsos().isEmpty()) {
-                uniqueQsos.add(dupe.getAssociatedQsos().getFirst());
+            if (dupe.getAssociatedQso() != null) {
+                uniqueQsos.add(dupe.getAssociatedQso());
             } else {
                 uniqueQsos.add(dupe);
             }
@@ -156,6 +156,7 @@ public class QsoService {
             }
 
             nonDupe.setConfirmation(QsoConfirmation.CONFIRMED);
+            nonDupe.associate(newQso);
             nonDupe = qsoRepository.save(nonDupe);
 
             newQso.setConfirmation(QsoConfirmation.CONFIRMED);
