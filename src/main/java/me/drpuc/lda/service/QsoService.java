@@ -93,6 +93,22 @@ public class QsoService {
         return qso.getUuid();
     }
 
+    public Qso read(User user, String uuid) {
+        if (empty(uuid)) {
+            throw new IllegalArgumentException("invalid uuid");
+        }
+
+        var qso = qsoRepository.findByUuid(uuid).orElseThrow(
+                () -> new IllegalArgumentException("invalid uuid")
+        );
+
+        if (!user.getStations().contains(qso.getSentFromStation())) {
+            throw new IllegalArgumentException("invalid uuid");
+        }
+
+        return qso;
+    }
+
     /*
     * The QSO confirmation algorithm is divided in two parts:
     * 1. Check for QSO duplicates
