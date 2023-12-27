@@ -1,9 +1,11 @@
 package me.drpuc.lda.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class Station {
     @Column(length = 6)
     private String grid;
 
+    @JsonIgnore
     @ManyToMany
     private final List<Qso> qsos = new LinkedList<>();
 

@@ -2,6 +2,7 @@ package me.drpuc.lda.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.drpuc.lda.dto.radio.CreateQsoDto;
+import me.drpuc.lda.entity.Qso;
 import me.drpuc.lda.service.UserService;
 import org.springframework.security.core.Authentication;
 import me.drpuc.lda.service.QsoService;
@@ -19,6 +20,13 @@ public class QsoController {
                             @RequestBody CreateQsoDto qsoDto) {
         var user = userService.getUserViaAuthentication(auth);
         return qsoService.create(user, qsoDto);
+    }
+
+    @GetMapping("/{uuid}")
+    public Qso getQso(Authentication auth,
+                      @PathVariable String uuid) {
+        var user = userService.getUserViaAuthentication(auth);
+        return qsoService.read(user, uuid);
     }
 
     @DeleteMapping("/{uuid}")
