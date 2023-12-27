@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import me.drpuc.lda.radio.QsoConfirmation;
 import me.drpuc.lda.radio.RadioStatus;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,9 +36,10 @@ public class Qso {
     @Column(nullable = false)
     private String comment;
 
-    @OneToOne
-    private Qso confirmedQso = null;
+    @ManyToMany
+    private final List<Qso> associatedQsos = new LinkedList<>();
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private QsoConfirmation confirmation = QsoConfirmation.UNCONFIRMED;
@@ -46,5 +50,9 @@ public class Qso {
         this.sentToStation = to;
         this.radioStatus = radioStatus;
         this.comment = comment;
+    }
+
+    public void associate(Qso qso) {
+        this.associatedQsos.add(qso);
     }
 }

@@ -5,10 +5,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.drpuc.lda.dto.radio.RadioStatusDto;
 
 @Embeddable
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RadioStatus {
@@ -22,5 +24,9 @@ public class RadioStatus {
         this.mode = radioStatus.mode();
         this.band = radioStatus.band();
         this.rst = radioStatus.rst();
+    }
+
+    public boolean isValidWith(RadioStatus other) {
+        return this.mode == other.mode && this.band == other.band;
     }
 }
