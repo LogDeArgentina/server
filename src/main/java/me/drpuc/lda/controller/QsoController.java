@@ -5,10 +5,7 @@ import me.drpuc.lda.dto.radio.CreateQsoDto;
 import me.drpuc.lda.service.UserService;
 import org.springframework.security.core.Authentication;
 import me.drpuc.lda.service.QsoService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +19,12 @@ public class QsoController {
                             @RequestBody CreateQsoDto qsoDto) {
         var user = userService.getUserByAuthentication(auth);
         return qsoService.create(user, qsoDto);
+    }
+
+    @DeleteMapping("/{uuid}")
+    public String deleteQso(Authentication auth,
+                            @PathVariable String uuid) {
+        var user = userService.getUserByAuthentication(auth);
+        return qsoService.delete(user, uuid);
     }
 }
