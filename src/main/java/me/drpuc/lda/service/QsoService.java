@@ -63,6 +63,36 @@ public class QsoService {
         return qso.getUuid();
     }
 
+    public String delete(User user, String uuid) {
+        if (empty(uuid)) {
+            throw new IllegalArgumentException("invalid uuid");
+        }
+
+        var qso = qsoRepository.findByUuid(uuid).orElseThrow(
+                () -> new IllegalArgumentException("invalid uuid")
+        );
+
+        if (!qso.getConfirmation().equals(QsoConfirmation.UNCONFIRMED)) {
+            throw new IllegalArgumentException("can only delete unconfirmed QSOs");
+        }
+
+        if (!user.getStations().contains(qso.getSentFromStation())) {
+            throw new IllegalArgumentException("invalid uuid");
+        }
+
+        var sentFromStation = qso.getSentFromStation();
+        var sentToStation = qso.getSentToStation();
+
+        sentFromStation.removeQso(qso);
+        sentToStation.removeQso(qso);
+
+        stationRepository.save(sentFromStation);
+        stationRepository.save(sentToStation);
+        qsoRepository.delete(qso);
+
+        return qso.getUuid();
+    }
+
     /*
     * The QSO confirmation algorithm is divided in two parts:
     * 1. Check for QSO duplicates

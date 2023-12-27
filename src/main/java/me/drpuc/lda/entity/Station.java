@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -25,7 +23,7 @@ public class Station {
     private String grid;
 
     @ManyToMany
-    private List<Qso> qsos = new LinkedList<>();
+    private final List<Qso> qsos = new LinkedList<>();
 
     public Station(String callsign) {
         this.callsign = callsign;
@@ -33,5 +31,9 @@ public class Station {
 
     public void addQso(Qso qso) {
         this.qsos.add(qso);
+    }
+
+    public void removeQso(Qso qso) {
+        this.qsos.remove(qso);
     }
 }
