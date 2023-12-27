@@ -17,14 +17,14 @@ public class QsoController {
     @PostMapping("/create")
     public String createQso(Authentication auth,
                             @RequestBody CreateQsoDto qsoDto) {
-        var user = userService.getUserByAuthentication(auth);
+        var user = userService.getUserViaAuthentication(auth);
         return qsoService.create(user, qsoDto);
     }
 
     @DeleteMapping("/{uuid}")
     public String deleteQso(Authentication auth,
                             @PathVariable String uuid) {
-        var user = userService.getUserByAuthentication(auth);
+        var user = userService.getUserViaAuthentication(auth);
         return qsoService.delete(user, uuid);
     }
 }
