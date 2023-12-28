@@ -31,6 +31,12 @@ public class FileServiceImpl implements FileService {
         return file.getOwner().equals(user);
     }
 
+    public void delete(String uuid) {
+        ValidationFile file = get(uuid);
+        fileRepository.delete(file);
+        fileContentStore.unsetContent(file);
+    }
+
     public List<ValidationFile> getAll() {
         return fileRepository.findAll();
     }
