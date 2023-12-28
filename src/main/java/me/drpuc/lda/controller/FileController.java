@@ -6,7 +6,7 @@ import me.drpuc.lda.entity.VerificationFile;
 import me.drpuc.lda.service.FileService;
 import me.drpuc.lda.service.UserService;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +32,7 @@ public class FileController {
     public InputStreamResource getFile(Authentication auth, @PathVariable String uuid) throws IOException {
         User user = userService.getUserViaAuthentication(auth);
         if (!fileService.isOwner(user, uuid) && !user.getRole().equals("ADMIN")) {
-            throw new BadCredentialsException("illegal access");
+            throw new AccessDeniedException("illegal access");
         }
 
         var content = fileService.read(uuid);
@@ -48,7 +48,7 @@ public class FileController {
     public void deleteFile(Authentication auth, @PathVariable String uuid) {
         User user = userService.getUserViaAuthentication(auth);
         if (!fileService.isOwner(user, uuid) && !user.getRole().equals("ADMIN")) {
-            throw new BadCredentialsException("illegal access");
+            throw new AccessDeniedException("illegal access");
         }
 
         fileService.delete(uuid);
