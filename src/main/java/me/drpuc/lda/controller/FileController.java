@@ -45,7 +45,13 @@ public class FileController {
     }
 
     @GetMapping("/all/{userUuid}")
-    public List<VerificationFile> getAllFilesFrom(@PathVariable String userUuid) {
+    public List<VerificationFile> getAllFilesFrom(Authentication auth,
+                                                  @PathVariable String userUuid) {
+        User user = userService.getUserViaAuthentication(auth);
+        if (!user.getUuid().equals(userUuid) && !user.getRole().equals("ADMIN")) {
+            throw new AccessDeniedException("illegal access");
+        }
+
         return fileService.getAllOwnedBy(userUuid);
     }
 
