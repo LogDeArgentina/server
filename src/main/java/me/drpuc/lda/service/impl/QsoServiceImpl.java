@@ -30,6 +30,10 @@ public class QsoServiceImpl implements QsoService {
     private final CallsignValidator callsignValidator;
 
     public String create(User fromUser, CreateQsoDto qsoDto) {
+        if (!fromUser.isVerified()) {
+            throw new IllegalArgumentException("not verified");
+        }
+
         var timestamp = qsoDto.timestamp();
         var fromStationDtoUnverified = qsoDto.sentFromStation();
         var toStationDto = qsoDto.sentToStation();
@@ -66,6 +70,10 @@ public class QsoServiceImpl implements QsoService {
     }
 
     public String delete(User user, String uuid) {
+        if (!user.isVerified()) {
+            throw new IllegalArgumentException("not verified");
+        }
+
         if (empty(uuid)) {
             throw new IllegalArgumentException("invalid uuid");
         }
@@ -96,6 +104,10 @@ public class QsoServiceImpl implements QsoService {
     }
 
     public Qso read(User user, String uuid) {
+        if (!user.isVerified()) {
+            throw new IllegalArgumentException("not verified");
+        }
+
         if (empty(uuid)) {
             throw new IllegalArgumentException("invalid uuid");
         }
@@ -112,6 +124,10 @@ public class QsoServiceImpl implements QsoService {
     }
 
     public List<Qso> readAllFrom(User user, String stationCallsign) {
+        if (!user.isVerified()) {
+            throw new IllegalArgumentException("not verified");
+        }
+
         if (empty(stationCallsign)) {
             throw new IllegalArgumentException("invalid station");
         }
