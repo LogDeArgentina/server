@@ -2,7 +2,7 @@ package me.drpuc.lda.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.drpuc.lda.entity.User;
-import me.drpuc.lda.entity.ValidationFile;
+import me.drpuc.lda.entity.VerificationFile;
 import me.drpuc.lda.service.FileService;
 import me.drpuc.lda.service.UserService;
 import org.springframework.core.io.InputStreamResource;
@@ -16,14 +16,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/validation")
-public class ValidationController {
+@RequestMapping("/api/file")
+public class FileController {
     private final FileService fileService;
     private final UserService userService;
 
     @PostMapping("")
     public List<String> uploadFiles(Authentication auth,
-                            @RequestParam("files") MultipartFile[] files) {
+                                    @RequestParam("files") MultipartFile[] files) {
         User user = userService.getUserViaAuthentication(auth);
         return fileService.saveAll(user, files);
     }
@@ -40,7 +40,7 @@ public class ValidationController {
     }
 
     @GetMapping("/all")
-    public List<ValidationFile> getAllFiles() {
+    public List<VerificationFile> getAllFiles() {
         return fileService.getAll();
     }
 

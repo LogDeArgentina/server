@@ -10,7 +10,7 @@ import org.springframework.content.commons.annotations.MimeType;
 @Entity
 @Getter
 @Setter
-public class ValidationFile {
+public class VerificationFile {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(unique = true, updatable = false)
