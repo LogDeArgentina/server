@@ -19,12 +19,6 @@ class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler
-    public ProblemDetail handle(IllegalStateException e) {
-        log.info("Handled IllegalStateException: {}", e.getMessage());
-        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
-    }
-
-    @ExceptionHandler
     public ProblemDetail handle(AccessDeniedException e) {
         log.info("Handled AccessDeniedException: {}", e.getMessage());
         return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, e.getMessage());
