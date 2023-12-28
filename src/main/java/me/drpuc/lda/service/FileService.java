@@ -14,4 +14,5 @@ public interface FileService {
     InputStream read(String uuid) throws IOException;
     List<String> saveAll(User user, MultipartFile[] files);
     boolean isOwner(User user, String uuid);
+    void delete(String uuid);
 }

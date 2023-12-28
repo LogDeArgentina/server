@@ -43,4 +43,14 @@ public class ValidationController {
     public List<ValidationFile> getAllFiles() {
         return fileService.getAll();
     }
+
+    @DeleteMapping("/{uuid}")
+    public void deleteFile(Authentication auth, @PathVariable String uuid) {
+        User user = userService.getUserViaAuthentication(auth);
+        if (!fileService.isOwner(user, uuid) && !user.getRole().equals("ADMIN")) {
+            throw new BadCredentialsException("illegal access");
+        }
+
+        fileService.delete(uuid);
+    }
 }
