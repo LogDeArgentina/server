@@ -13,12 +13,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
     private final FileRepository fileRepository;
     private final FileContentStore fileContentStore;
+    private final Set<String> allowedMime = Set.of(
+            "image/png",
+            "image/jpeg",
+            "application/pdf",
+            "application/msword"
+    );
 
     public VerificationFile get(String uuid) {
         return fileRepository.findById(uuid).orElseThrow(
@@ -48,6 +55,16 @@ public class FileServiceImpl implements FileService {
 
     public List<String> saveAll(User user, MultipartFile[] files) {
         List<String> uuids = new LinkedList<>();
+
+        if (files.length > 3) {
+            throw new IllegalArgumentException("too many files");
+        }
+
+        for (MultipartFile multipartFile : files) {
+            if (!allowedMime.contains(multipartFile.getContentType())) {
+                throw new IllegalArgumentException("invalid file type");
+            }
+        }
 
         for (MultipartFile multipartFile : files) {
             VerificationFile file = new VerificationFile();
