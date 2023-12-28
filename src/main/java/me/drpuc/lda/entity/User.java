@@ -63,4 +63,9 @@ public class User {
             this.verifiedAt = new Date();
         }
     }
+
+    public void unverify() {
+        this.verified = false;
+        this.verifiedAt = null;
+    }
 }
