@@ -40,6 +40,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("user not found via: " + email));
     }
 
+    public User getUserByUuid(String uuid) {
+        return userRepository
+                .findByUuid(uuid)
+                .orElseThrow(() -> new UsernameNotFoundException("user not found via: " + uuid));
+    }
+
     public String login(LoginDto dto) {
         var email = dto.email();
         var password = dto.password();

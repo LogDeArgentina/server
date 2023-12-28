@@ -58,7 +58,9 @@ public class User {
     }
 
     public void verify() {
-        this.verified = true;
-        this.verifiedAt = new Date();
+        if (this.verifiedAt == null) {
+            this.verified = true;
+            this.verifiedAt = new Date();
+        }
     }
 }
