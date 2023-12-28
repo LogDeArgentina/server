@@ -12,6 +12,6 @@ public interface FileService {
     ValidationFile get(String uuid);
     List<ValidationFile> getAll();
     InputStream read(String uuid) throws IOException;
-    List<String> save(User user, MultipartFile[] files);
+    List<String> saveAll(User user, MultipartFile[] files);
     boolean isOwner(User user, String uuid);
 }

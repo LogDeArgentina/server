@@ -25,7 +25,7 @@ public class ValidationController {
     public List<String> uploadFiles(Authentication auth,
                             @RequestParam("files") MultipartFile[] files) {
         User user = userService.getUserViaAuthentication(auth);
-        return fileService.save(user, files);
+        return fileService.saveAll(user, files);
     }
 
     @GetMapping("/{uuid}")
