@@ -13,6 +13,7 @@ import me.drpuc.lda.repository.QsoRepository;
 import me.drpuc.lda.repository.StationRepository;
 import me.drpuc.lda.service.QsoService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
@@ -31,7 +32,7 @@ public class QsoServiceImpl implements QsoService {
 
     public String create(User fromUser, CreateQsoDto qsoDto) {
         if (!fromUser.isVerified()) {
-            throw new IllegalArgumentException("not verified");
+            throw new AccessDeniedException("not verified");
         }
 
         var timestamp = qsoDto.timestamp();
@@ -71,7 +72,7 @@ public class QsoServiceImpl implements QsoService {
 
     public String delete(User user, String uuid) {
         if (!user.isVerified()) {
-            throw new IllegalArgumentException("not verified");
+            throw new AccessDeniedException("not verified");
         }
 
         if (empty(uuid)) {
@@ -105,7 +106,7 @@ public class QsoServiceImpl implements QsoService {
 
     public Qso read(User user, String uuid) {
         if (!user.isVerified()) {
-            throw new IllegalArgumentException("not verified");
+            throw new AccessDeniedException("not verified");
         }
 
         if (empty(uuid)) {
@@ -125,7 +126,7 @@ public class QsoServiceImpl implements QsoService {
 
     public List<Qso> readAllFrom(User user, String stationCallsign) {
         if (!user.isVerified()) {
-            throw new IllegalArgumentException("not verified");
+            throw new AccessDeniedException("not verified");
         }
 
         if (empty(stationCallsign)) {
