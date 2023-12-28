@@ -44,6 +44,11 @@ public class FileController {
         return fileService.getAll();
     }
 
+    @GetMapping("/all/{userUuid}")
+    public List<VerificationFile> getAllFilesFrom(@PathVariable String userUuid) {
+        return fileService.getAllOwnedBy(userUuid);
+    }
+
     @DeleteMapping("/{uuid}")
     public void deleteFile(Authentication auth, @PathVariable String uuid) {
         User user = userService.getUserViaAuthentication(auth);

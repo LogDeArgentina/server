@@ -48,6 +48,10 @@ public class FileServiceImpl implements FileService {
         return fileRepository.findAll();
     }
 
+    public List<VerificationFile> getAllOwnedBy(String userUuid) {
+        return fileRepository.findAllByOwnerUuid(userUuid);
+    }
+
     public InputStream read(String uuid) throws IOException {
         VerificationFile file = get(uuid);
         return fileContentStore.getResource(file).getInputStream();

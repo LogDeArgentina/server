@@ -11,6 +11,7 @@ import java.util.List;
 public interface FileService {
     VerificationFile get(String uuid);
     List<VerificationFile> getAll();
+    List<VerificationFile> getAllOwnedBy(String userUuid);
     InputStream read(String uuid) throws IOException;
     List<String> saveAll(User user, MultipartFile[] files);
     boolean isOwner(User user, String uuid);
