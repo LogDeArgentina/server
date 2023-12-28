@@ -2,7 +2,7 @@ package me.drpuc.lda.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.drpuc.lda.entity.User;
-import me.drpuc.lda.entity.ValidationFile;
+import me.drpuc.lda.entity.VerificationFile;
 import me.drpuc.lda.repository.FileRepository;
 import me.drpuc.lda.service.FileService;
 import me.drpuc.lda.repository.FileContentStore;
@@ -20,29 +20,29 @@ public class FileServiceImpl implements FileService {
     private final FileRepository fileRepository;
     private final FileContentStore fileContentStore;
 
-    public ValidationFile get(String uuid) {
+    public VerificationFile get(String uuid) {
         return fileRepository.findById(uuid).orElseThrow(
                 () -> new IllegalArgumentException("file not found via: " + uuid)
         );
     }
 
     public boolean isOwner(User user, String uuid) {
-        ValidationFile file = get(uuid);
+        VerificationFile file = get(uuid);
         return file.getOwner().equals(user);
     }
 
     public void delete(String uuid) {
-        ValidationFile file = get(uuid);
+        VerificationFile file = get(uuid);
         fileRepository.delete(file);
         fileContentStore.unsetContent(file);
     }
 
-    public List<ValidationFile> getAll() {
+    public List<VerificationFile> getAll() {
         return fileRepository.findAll();
     }
 
     public InputStream read(String uuid) throws IOException {
-        ValidationFile file = get(uuid);
+        VerificationFile file = get(uuid);
         return fileContentStore.getResource(file).getInputStream();
     }
 
@@ -50,7 +50,7 @@ public class FileServiceImpl implements FileService {
         List<String> uuids = new LinkedList<>();
 
         for (MultipartFile multipartFile : files) {
-            ValidationFile file = new ValidationFile();
+            VerificationFile file = new VerificationFile();
             file.setOwner(user);
             file = fileRepository.save(file);
 
