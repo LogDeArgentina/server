@@ -2,7 +2,7 @@ package me.drpuc.lda.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.drpuc.lda.entity.User;
-import me.drpuc.lda.repository.UserRepository;
+import me.drpuc.lda.service.VerificationService;
 import me.drpuc.lda.service.UserService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/verification")
 public class VerificationController {
     private final UserService userService;
-    private final UserRepository userRepository;
+    private final VerificationService verificationService;
 
     @GetMapping("/due")
     public List<User> getDueUsers(Authentication auth) {
@@ -24,7 +24,7 @@ public class VerificationController {
             throw new AccessDeniedException("illegal access");
         }
 
-        return userRepository.findByVerified(false);
+        return verificationService.getUnverifiedUsers();
     }
 
     @PostMapping("/{userUuid}")
@@ -35,9 +35,7 @@ public class VerificationController {
             throw new AccessDeniedException("illegal access");
         }
 
-        User user = userService.getUserByUuid(userUuid);
-        user.verify();
-        userRepository.save(user);
+        verificationService.verify(userUuid);
     }
 
     @DeleteMapping("/{userUuid}")
@@ -48,8 +46,6 @@ public class VerificationController {
             throw new AccessDeniedException("illegal access");
         }
 
-        User user = userService.getUserByUuid(userUuid);
-        user.unverify();
-        userRepository.save(user);
+        verificationService.unverify(userUuid);
     }
 }
