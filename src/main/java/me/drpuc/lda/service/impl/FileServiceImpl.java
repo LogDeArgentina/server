@@ -40,7 +40,7 @@ public class FileServiceImpl implements FileService {
         return fileContentStore.getResource(file).getInputStream();
     }
 
-    public List<String> save(User user, MultipartFile[] files) {
+    public List<String> saveAll(User user, MultipartFile[] files) {
         List<String> uuids = new LinkedList<>();
 
         for (MultipartFile multipartFile : files) {
