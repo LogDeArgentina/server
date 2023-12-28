@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/validation/all").hasRole("ADMIN")
                                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 )
                 .userDetailsService(uds)
