@@ -6,11 +6,10 @@ import me.drpuc.lda.entity.VerificationFile;
 import me.drpuc.lda.repository.FileRepository;
 import me.drpuc.lda.service.FileService;
 import me.drpuc.lda.repository.FileContentStore;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -52,9 +51,16 @@ public class FileServiceImpl implements FileService {
         return fileRepository.findAllByOwnerUuid(userUuid);
     }
 
-    public InputStream read(String uuid) throws IOException {
+    public ResourceContainer read(String uuid) {
         VerificationFile file = get(uuid);
-        return fileContentStore.getResource(file).getInputStream();
+        InputStreamResource inputStreamResource = new InputStreamResource(
+                fileContentStore.getContent(file)
+        );
+
+        return new ResourceContainer(
+                inputStreamResource,
+                file.getMimeType()
+        );
     }
 
     public List<String> saveAll(User user, MultipartFile[] files) {

@@ -1,6 +1,7 @@
 package me.drpuc.lda.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.drpuc.lda.dto.response.UserResponse;
 import me.drpuc.lda.entity.User;
 import me.drpuc.lda.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/me")
-    public User currentUser(Authentication auth) {
-        return userService.getUserViaAuthentication(auth);
+    public UserResponse currentUser(Authentication auth) {
+        User user = userService.getUserViaAuthentication(auth);
+        return new UserResponse(user);
     }
 }

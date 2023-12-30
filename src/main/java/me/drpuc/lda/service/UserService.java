@@ -1,7 +1,7 @@
 package me.drpuc.lda.service;
 
-import me.drpuc.lda.dto.LoginDto;
-import me.drpuc.lda.dto.RegisterDto;
+import me.drpuc.lda.dto.request.auth.LoginDto;
+import me.drpuc.lda.dto.request.auth.RegisterDto;
 import me.drpuc.lda.entity.User;
 import org.springframework.security.core.Authentication;
 

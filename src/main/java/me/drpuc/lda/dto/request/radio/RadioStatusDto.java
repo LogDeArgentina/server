@@ -1,4 +1,4 @@
-package me.drpuc.lda.dto.radio;
+package me.drpuc.lda.dto.request.radio;
 
 import me.drpuc.lda.radio.RadioBand;
 import me.drpuc.lda.radio.RadioMode;

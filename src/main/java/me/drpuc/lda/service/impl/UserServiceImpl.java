@@ -2,8 +2,8 @@ package me.drpuc.lda.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.drpuc.lda.config.CallsignValidator;
-import me.drpuc.lda.dto.LoginDto;
-import me.drpuc.lda.dto.RegisterDto;
+import me.drpuc.lda.dto.request.auth.LoginDto;
+import me.drpuc.lda.dto.request.auth.RegisterDto;
 import me.drpuc.lda.entity.Station;
 import me.drpuc.lda.entity.User;
 import me.drpuc.lda.repository.StationRepository;

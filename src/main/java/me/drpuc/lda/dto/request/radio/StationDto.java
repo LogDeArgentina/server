@@ -1,4 +1,4 @@
-package me.drpuc.lda.dto.radio;
+package me.drpuc.lda.dto.request.radio;
 
 import java.io.Serializable;
 

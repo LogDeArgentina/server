@@ -1,8 +1,9 @@
 package me.drpuc.lda.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.drpuc.lda.dto.LoginDto;
-import me.drpuc.lda.dto.RegisterDto;
+import me.drpuc.lda.dto.request.auth.LoginDto;
+import me.drpuc.lda.dto.request.auth.RegisterDto;
+import me.drpuc.lda.dto.response.TokenResponse;
 import me.drpuc.lda.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,12 +17,14 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterDto registerDto) {
-        return userService.register(registerDto);
+    public TokenResponse register(@RequestBody RegisterDto registerDto) {
+        String token = userService.register(registerDto);
+        return new TokenResponse(token);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto) {
-        return userService.login(loginDto);
+    public TokenResponse login(@RequestBody LoginDto loginDto) {
+        String token = userService.login(loginDto);
+        return new TokenResponse(token);
     }
 }
