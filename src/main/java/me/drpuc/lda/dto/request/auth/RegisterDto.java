@@ -1,4 +1,4 @@
-package me.drpuc.lda.dto;
+package me.drpuc.lda.dto.request.auth;
 
 import java.io.Serializable;
 

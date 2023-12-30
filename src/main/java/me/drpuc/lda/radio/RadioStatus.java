@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.drpuc.lda.dto.radio.RadioStatusDto;
+import me.drpuc.lda.dto.request.radio.RadioStatusDto;
 
 @Embeddable
 @Getter

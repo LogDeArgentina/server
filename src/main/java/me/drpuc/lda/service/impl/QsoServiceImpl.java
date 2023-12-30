@@ -2,8 +2,8 @@ package me.drpuc.lda.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import me.drpuc.lda.config.CallsignValidator;
-import me.drpuc.lda.dto.radio.CreateQsoDto;
-import me.drpuc.lda.dto.radio.StationDto;
+import me.drpuc.lda.dto.request.radio.CreateQsoDto;
+import me.drpuc.lda.dto.request.radio.StationDto;
 import me.drpuc.lda.entity.Qso;
 import me.drpuc.lda.entity.Station;
 import me.drpuc.lda.entity.User;
@@ -70,7 +70,7 @@ public class QsoServiceImpl implements QsoService {
         return qso.getUuid();
     }
 
-    public String delete(User user, String uuid) {
+    public void delete(User user, String uuid) {
         if (!user.isVerified()) {
             throw new AccessDeniedException("not verified");
         }
@@ -100,8 +100,6 @@ public class QsoServiceImpl implements QsoService {
         stationRepository.save(sentFromStation);
         stationRepository.save(sentToStation);
         qsoRepository.delete(qso);
-
-        return qso.getUuid();
     }
 
     public Qso read(User user, String uuid) {
