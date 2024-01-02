@@ -22,8 +22,7 @@ public class FileServiceImpl implements FileService {
     private final Set<String> allowedMime = Set.of(
             "image/png",
             "image/jpeg",
-            "application/pdf",
-            "application/msword"
+            "application/pdf"
     );
 
     public VerificationFile get(String uuid) {
