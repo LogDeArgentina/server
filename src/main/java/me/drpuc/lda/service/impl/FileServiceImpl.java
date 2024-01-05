@@ -65,6 +65,10 @@ public class FileServiceImpl implements FileService {
     public List<String> saveAll(User user, MultipartFile[] files) {
         List<String> uuids = new LinkedList<>();
 
+        if (user.isVerified()) {
+            throw new IllegalArgumentException("user is already verified");
+        }
+
         if (files.length > 3) {
             throw new IllegalArgumentException("too many files");
         }
