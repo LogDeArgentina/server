@@ -69,7 +69,7 @@ public class FileServiceImpl implements FileService {
             throw new IllegalArgumentException("user is already verified");
         }
 
-        if (files.length > 3) {
+        if (getAllOwnedBy(user.getUuid()).size() + files.length > 4) {
             throw new IllegalArgumentException("too many files");
         }
 
