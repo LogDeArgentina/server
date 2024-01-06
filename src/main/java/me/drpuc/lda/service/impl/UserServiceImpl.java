@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public String login(LoginDto dto) {
-        var email = dto.email();
+        var email = dto.email().toLowerCase();
         var password = dto.password();
 
         var authInputToken = new UsernamePasswordAuthenticationToken(email, password);

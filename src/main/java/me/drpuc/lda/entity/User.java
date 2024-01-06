@@ -48,7 +48,7 @@ public class User {
     public User(String callsign, String name, String email, String password) {
         this.callsign = callsign.toUpperCase();
         this.name = name;
-        this.email = email;
+        this.email = email.toLowerCase();
         this.password = password;
         this.createdAt = new Date();
     }
