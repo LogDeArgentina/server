@@ -46,7 +46,7 @@ public class User {
     private String role = "USER";
 
     public User(String callsign, String name, String email, String password) {
-        this.callsign = callsign;
+        this.callsign = callsign.toUpperCase();
         this.name = name;
         this.email = email;
         this.password = password;
