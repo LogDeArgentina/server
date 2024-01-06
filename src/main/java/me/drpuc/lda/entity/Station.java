@@ -29,7 +29,7 @@ public class Station {
     private final List<Qso> qsos = new LinkedList<>();
 
     public Station(String callsign) {
-        this.callsign = callsign;
+        this.callsign = callsign.toUpperCase();
     }
 
     public void addQso(Qso qso) {

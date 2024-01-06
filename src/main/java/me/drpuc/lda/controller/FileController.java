@@ -80,6 +80,17 @@ public class FileController {
         return new FilesResponse(fileResponses);
     }
 
+    @DeleteMapping("/all/{userUuid}")
+    public void deleteAllFilesFrom(Authentication auth,
+                                   @PathVariable String userUuid) {
+        User user = userService.getUserViaAuthentication(auth);
+        if (!user.getUuid().equals(userUuid) && !user.getRole().equals("ADMIN")) {
+            throw new AccessDeniedException("illegal access");
+        }
+        fileService.getAllOwnedBy(userUuid).forEach(file ->
+                fileService.delete(file.getUuid()));
+    }
+
     @DeleteMapping("/{uuid}")
     public void deleteFile(Authentication auth, @PathVariable String uuid) {
         User user = userService.getUserViaAuthentication(auth);

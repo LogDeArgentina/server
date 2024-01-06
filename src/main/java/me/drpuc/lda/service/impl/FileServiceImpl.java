@@ -22,8 +22,7 @@ public class FileServiceImpl implements FileService {
     private final Set<String> allowedMime = Set.of(
             "image/png",
             "image/jpeg",
-            "application/pdf",
-            "application/msword"
+            "application/pdf"
     );
 
     public VerificationFile get(String uuid) {
@@ -66,7 +65,11 @@ public class FileServiceImpl implements FileService {
     public List<String> saveAll(User user, MultipartFile[] files) {
         List<String> uuids = new LinkedList<>();
 
-        if (files.length > 3) {
+        if (user.isVerified()) {
+            throw new IllegalArgumentException("user is already verified");
+        }
+
+        if (getAllOwnedBy(user.getUuid()).size() + files.length > 4) {
             throw new IllegalArgumentException("too many files");
         }
 
